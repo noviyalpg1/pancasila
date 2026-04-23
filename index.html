@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Media Pembelajaran: Simbol Pancasila</title>
+    <style>
+        /* === VARIABEL WARNA & TEMA === */
+        :root {
+            --primary: #0A2463;     /* Navy */
+            --primary-light: #3E92CC; /* Biru Muda */
+            --primary-dark: #071946;
+            --bg-color: #F4F7F6;    /* Abu-abu kebiruan sangat terang */
+            --white: #FFFFFF;
+            --text-dark: #1E293B;   /* Slate 800 */
+            --text-light: #64748B;  /* Slate 500 */
+            --accent: #FFC857;      /* Kuning/Emas */
+            --accent-hover: #E5B34E;
+            --success: #4CAF50;
+            --error: #F44336;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 8px;
+            --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* === RESET & DASAR === */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            font-size: 18px; /* Ramah anak */
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+        h1, h2, h3, h4 { color: var(--primary); font-weight: 700; }
+        button { font-family: inherit; cursor: pointer; border: none; outline: none; transition: var(--transition); }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* === TIPOGRAFI & AKSESIBILITAS === */
+        .text-center { text-align: center; }
+        .text-primary { color: var(--primary); }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
+        
+        /* Tombol minimum 48px untuk layar sentuh */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-height: 48px; min-width: 48px;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-size: 18px; font-weight: 600;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .btn:active { transform: scale(0.95); }
+        .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+        
+        .btn-primary { background-color: var(--primary); color: var(--white); }
+        .btn-primary:hover { background-color: var(--primary-dark); }
+        .btn-secondary { background-color: var(--primary-light); color: var(--white); }
+        .btn-secondary:hover { background-color: #317db3; }
+        .btn-accent { background-color: var(--accent); color: var(--primary); }
+        .btn-accent:hover { background-color: var(--accent-hover); }
+        .btn-outline { background-color: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        .btn-icon { padding: 12px; border-radius: 50%; aspect-ratio: 1; }
+
+        /* === TATA LETAK & KARTU === */
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .card {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+        
+        /* === NAVIGASI (STICKY) === */
+        header {
+            background-color: var(--white);
+            position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 10px 20px;
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; min-height: 60px; }
+        .logo { font-size: 24px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .logo svg { width: 32px; height: 32px; fill: var(--accent); }
+        
+        .nav-menu { display: flex; gap: 10px; align-items: center; }
+        .nav-link {
+            padding: 10px 16px; border-radius: var(--radius-sm);
+            font-weight: 600; color: var(--text-dark);
+            min-height: 48px; display: flex; align-items: center;
+        }
+        .nav-link:hover, .nav-link.active { background-color: var(--primary-light); color: var(--white); }
+        
+        .nav-controls { display: flex; gap: 10px; }
+        .menu-toggle { display: none; background: none; color: var(--primary); font-size: 24px; }
+
+        /* === HALAMAN (SPA LOGIC) === */
+        .page-section { display: none; animation: fadeIn 0.4s ease-out; }
+        .page-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* === BERANDA === */
+        .hero { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 40px 0; gap: 20px; }
+        .hero h1 { font-size: clamp(32px, 5vw, 48px); }
+        .hero-img { width: 200px; height: 200px; background-color: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-soft); margin-bottom: 20px; }
+        .hero-img svg { width: 120px; height: 120px; fill: var(--white); }
+        
+        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
+        .progress-container { background: #E2E8F0; border-radius: 20px; height: 24px; width: 100%; overflow: hidden; margin: 15px 0; border: 2px solid var(--white); box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
+        .progress-bar { background: linear-gradient(90deg, var(--primary-light), var(--primary)); height: 100%; width: 0%; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 20px; }
+        
+        .badge-list { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        .badge { width: 60px; height: 60px; border-radius: 50%; background: #CBD5E1; display: flex; align-items: center; justify-content: center; opacity: 0.5; transition: var(--transition); border: 3px solid white; box-shadow: var(--shadow-soft); }
+        .badge.earned { background: var(--accent); opacity: 1; border-color: var(--primary); }
+        .badge svg { width: 30px; height: 30px; fill: var(--white); }
+        .badge.earned svg { fill: var(--primary); }
+
+        .thumbnail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 30px; }
+        .thumb-card { text-align: center; cursor: pointer; padding: 15px; display: flex; flex-direction: column; align-items: center; gap: 10px;}
+        .thumb-icon { width: 80px; height: 80px; border-radius: 50%; background: var(--bg-color); display: flex; align-items: center; justify-content: center; }
+        .thumb-icon svg { width: 50px; height: 50px; }
+        .thumb-card:hover .thumb-icon { background: var(--primary-light); }
+        .thumb-card:hover svg { fill: white; }
+
+        /* === MATERI === */
+        .materi-layout { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        @media (min-width: 900px) { .materi-layout { grid-template-columns: 300px 1fr; } }
+        
+        .garuda-explorer { position: relative; background: var(--white); border-radius: var(--radius-lg); padding: 20px; display: flex; flex-direction: column; align-items: center; box-shadow: var(--shadow-soft);}
+        .shield-container { position: relative; width: 250px; height: 280px; background: url('https://imgur.com/xNa6kmY.png') no-repeat center/contain; }
+        
+        .click-area { position: absolute; cursor: pointer; border-radius: 50%; transition: var(--transition); display: flex; align-items: center; justify-content: center; }
+        .click-area:hover, .click-area.active { transform: scale(1.1); background-color: rgba(255,200,87,0.3); border: 2px solid var(--accent); }
+        .click-area svg { width: 60%; height: 60%; pointer-events: none; }
+        
+        /* Posisi kasar pada perisai */
+        #area-1 { top: 35%; left: 35%; width: 30%; height: 30%; background: #000; } /* Bintang di tengah hitam */
+        #area-2 { bottom: 15%; right: 15%; width: 25%; height: 25%; }
+        #area-3 { top: 15%; right: 15%; width: 25%; height: 25%; }
+        #area-4 { top: 15%; left: 15%; width: 25%; height: 25%; background: #f00; } /* Banteng latar merah */
+        #area-5 { bottom: 15%; left: 15%; width: 25%; height: 25%; }
+
+        .flashcard-container { perspective: 1000px; min-height: 400px; display: flex; flex-direction: column; }
+        .flashcard { background: var(--white); border-radius: var(--radius-lg); padding: 40px; box-shadow: var(--shadow-soft); display: flex; flex-direction: column; align-items: center; text-align: center; flex: 1; border: 4px solid var(--primary-light); position: relative; overflow: hidden;}
+        .flashcard::before { content: ''; position: absolute; top: -50px; left: -50px; width: 150px; height: 150px; background: rgba(62, 146, 204, 0.1); border-radius: 50%; z-index: 0; }
+        .flashcard > * { z-index: 1; }
+        
+        .simbol-img { width: 150px; height: 150px; margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        
+        .simbol-title { font-size: 32px; color: var(--primary); margin-bottom: 10px; }
+        .simbol-sila { font-size: 20px; font-weight: 600; color: var(--accent-hover); margin-bottom: 20px; }
+        .simbol-desc { font-size: 22px; color: var(--text-dark); margin-bottom: 30px; }
+        
+        .materi-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; width: 100%; gap: 10px;}
+
+        /* === LATIHAN === */
+        .latihan-menu { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
+        .latihan-btn { flex: 1; min-width: 150px; font-size: 16px; }
+        
+        .latihan-area { background: var(--white); border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--shadow-soft); min-height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        
+        /* True/False */
+        .tf-question { font-size: 28px; font-weight: bold; margin-bottom: 40px; color: var(--primary); }
+        .tf-buttons { display: flex; gap: 20px; justify-content: center; width: 100%; }
+        .btn-true { background-color: var(--success); color: white; flex: 1; max-width: 200px; font-size: 24px;}
+        .btn-false { background-color: var(--error); color: white; flex: 1; max-width: 200px; font-size: 24px;}
+        
+        /* Matching */
+        .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; max-width: 600px; }
+        .match-col { display: flex; flex-direction: column; gap: 15px; }
+        .match-item { padding: 15px; border: 3px solid var(--primary-light); border-radius: var(--radius-md); cursor: pointer; transition: var(--transition); background: var(--white); font-weight: bold; min-height: 60px; display: flex; align-items: center; justify-content: center;}
+        .match-item.selected { background-color: var(--accent); border-color: var(--primary); color: var(--primary); transform: scale(1.05); }
+        .match-item.matched { background-color: var(--success); color: white; border-color: var(--success); cursor: default; opacity: 0.8; }
+        .match-item.error { animation: shake 0.5s; background-color: var(--error); color: white; border-color: var(--error); }
+        
+        /* Drag and Drop (Mobile Friendly Tap-to-Place approach) */
+        .dnd-container { width: 100%; display: flex; flex-direction: column; gap: 30px; }
+        .dnd-sources { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; padding: 20px; background: var(--bg-color); border-radius: var(--radius-md); }
+        .dnd-item { width: 80px; height: 80px; background: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-soft); cursor: grab; border: 3px solid transparent; transition: transform 0.2s;}
+        .dnd-item.dragging { opacity: 0.5; }
+        .dnd-item.selected-dnd { border-color: var(--accent); transform: scale(1.1); box-shadow: 0 0 15px var(--accent); }
+        .dnd-item svg { width: 50px; height: 50px; pointer-events: none; }
+        
+        .dnd-targets { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 500px; margin: 0 auto; }
+        .dnd-target { border: 3px dashed var(--primary-light); border-radius: var(--radius-md); padding: 15px; display: flex; align-items: center; gap: 20px; background: var(--white); min-height: 90px; transition: background 0.3s;}
+        .dnd-target.drag-over { background: rgba(62, 146, 204, 0.2); border-style: solid; border-color: var(--primary); }
+        .dnd-target.filled { border-style: solid; border-color: var(--success); }
+        .target-drop-area { width: 70px; height: 70px; border-radius: 50%; background: var(--bg-color); display: flex; align-items: center; justify-content: center; }
+        .target-label { font-weight: bold; font-size: 18px; text-align: left; flex: 1; }
+
+        /* Hasil Latihan */
+        .result-box { text-align: center; }
+        .score-circle { width: 150px; height: 150px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: bold; margin: 0 auto 20px; border: 8px solid var(--accent); box-shadow: 0 0 0 10px rgba(255, 200, 87, 0.3); }
+
+        /* === REFLEKSI === */
+        .emoji-group { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
+        .emoji-btn { font-size: 50px; background: none; border: none; cursor: pointer; transition: transform 0.2s, filter 0.2s; filter: grayscale(100%); }
+        .emoji-btn:hover { transform: scale(1.2); filter: grayscale(50%); }
+        .emoji-btn.selected { filter: grayscale(0%); transform: scale(1.3); animation: bounce 0.5s; }
+        
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 10px; color: var(--primary); font-size: 20px;}
+        textarea, select { width: 100%; padding: 15px; border-radius: var(--radius-md); border: 2px solid var(--primary-light); font-family: inherit; font-size: 18px; resize: vertical; }
+        textarea:focus, select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(62, 146, 204, 0.3); }
+
+        /* === PENGEMBANG === */
+        .dev-profile { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px; }
+        .avatar { width: 150px; height: 150px; border-radius: 50%; background-color: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 64px; border: 5px solid var(--accent); }
+        .dev-info h3 { font-size: 28px; margin-bottom: 5px; }
+        .dev-info p { color: var(--text-light); }
+
+        /* === FOOTER === */
+        .custom-footer {
+            background-color: var(--white);
+            border-top: 1px solid #e2e8f0;
+            margin-top: auto;
+            box-shadow: 0 -4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+        @media (min-width: 640px) {
+            .footer-container { flex-direction: row; }
+        }
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #1e293b;
+        }
+        .brand-logo {
+            width: 32px; height: 32px;
+            background-color: #2563eb;
+            border-radius: 8px;
+            display: flex; justify-content: center; align-items: center;
+            color: white; font-weight: bold; font-size: 14px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .brand-title { font-weight: 800; font-size: 18px; line-height: 1; margin: 0;}
+        .brand-copyright { font-size: 12px; color: #64748b; margin-top: 4px; }
+        
+        .footer-socials { display: flex; align-items: center; gap: 16px; }
+        .social-icon {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background-color: #f8fafc;
+            display: flex; justify-content: center; align-items: center;
+            color: #64748b;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        .social-icon.instagram:hover { background-color: #fce7f3; color: #db2777; }
+        .social-icon.tiktok:hover { background-color: #dbeafe; color: #3b82f6; }
+        .social-icon.facebook:hover { background-color: #e0e7ff; color: #4f46e5; }
+        .social-icon.youtube:hover { background-color: #fee2e2; color: #dc2626; }
+
+        /* === UTILITAS & ANIMASI === */
+        .hidden { display: none !important; }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) scale(1.3); }
+            50% { transform: translateY(-15px) scale(1.3); }
+        }
+        
+        /* Modal Feedback */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .modal-overlay.show { opacity: 1; pointer-events: auto; }
+        .modal-content { background: white; padding: 40px; border-radius: var(--radius-lg); text-align: center; transform: scale(0.8); transition: transform 0.3s; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .modal-overlay.show .modal-content { transform: scale(1); }
+        .modal-icon { font-size: 80px; margin-bottom: 20px; }
+        
+        /* === RESPONSIVE (MEDIA QUERIES) === */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: absolute; top: 100%; left: 0; width: 100%;
+                background: var(--white); flex-direction: column;
+                padding: 20px; box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: clip-path 0.3s ease-in-out; gap: 5px;
+            }
+            .nav-menu.open { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+            .menu-toggle { display: block; }
+            .nav-link { width: 100%; justify-content: center; }
+            
+            .hero h1 { font-size: 28px; }
+            .flashcard { padding: 20px; }
+            .simbol-title { font-size: 24px; }
+            .simbol-desc { font-size: 18px; }
+            
+            .match-grid { grid-template-columns: 1fr; gap: 15px; }
+            .match-col { flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
+            .match-item { flex: 0 0 auto; width: 150px; font-size: 14px; }
+            
+            .dnd-sources { padding: 10px; }
+            .dnd-item { width: 60px; height: 60px; }
+            .dnd-item svg { width: 40px; height: 40px; }
+            .dnd-target { flex-direction: column; text-align: center; }
+            .target-label { text-align: center; }
+        }
+
+        /* SVG Colors (Inline definitions) */
+        .svg-gold { fill: #FFD700; }
+        .svg-black { fill: #000000; }
+        .svg-red { fill: #FF0000; }
+        .svg-white { fill: #FFFFFF; }
+        .svg-green { fill: #2E8B57; }
+        .svg-brown { fill: #8B4513; }
+        .svg-yellow { fill: #FFA500; }
+        .svg-grey { fill: #808080; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGASI ATAS -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <!-- Icon Bintang Sederhana -->
+                <img src="https://imgur.com/NO8kR58.png" alt="Bintang" style="width: 32px; height: 32px; object-fit: contain;">
+                Pancasila Kids
+            </div>
+            
+            <button class="menu-toggle" aria-label="Buka Menu" id="btn-menu">☰</button>
+            
+            <nav class="nav-menu" id="main-nav">
+                <a href="#beranda" class="nav-link active" data-target="beranda">Beranda</a>
+                <a href="#materi" class="nav-link" data-target="materi">Materi</a>
+                <a href="#latihan" class="nav-link" data-target="latihan">Latihan</a>
+                <a href="#refleksi" class="nav-link" data-target="refleksi">Refleksi</a>
+                <a href="#pengembang" class="nav-link" data-target="pengembang">Pengembang</a>
+            </nav>
+
+            <div class="nav-controls">
+                <button class="btn btn-icon btn-outline" id="btn-audio" aria-label="Mute/Unmute Musik Latar">
+                    <svg id="icon-vol-on" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    <svg id="icon-vol-off" class="hidden" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                </button>
+                <button class="btn btn-icon btn-outline" id="btn-fullscreen" aria-label="Layar Penuh">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- KONTEN UTAMA -->
+    <main id="app-content" class="container">
+        
+        <!-- SECTION: BERANDA -->
+        <section id="beranda" class="page-section active">
+            <div class="hero">
+                <div class="hero-img">
+                    <!-- Gambar Logo Custom -->
+                    <img src="https://imgur.com/jFzzKLL.png" alt="Logo Pancasila" style="width: 140px; height: 140px; object-fit: contain;">
+                </div>
+                <h1>Mari Mengenal Simbol Pancasila!</h1>
+                <p>Belajar lambang negara kita jadi mudah dan menyenangkan.</p>
+                <button class="btn btn-primary btn-nav-jump" data-target="materi" style="font-size: 24px; padding: 15px 40px; border-radius: 30px;">Mulai Belajar 🚀</button>
+            </div>
+
+            <div class="dashboard">
+                <div class="card">
+                    <h3>Progress Belajarmu</h3>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="main-progress"></div>
+                    </div>
+                    <p class="text-center"><span id="progress-text">0</span>% Selesai</p>
+                </div>
+                <div class="card">
+                    <h3>Lencana Prestasi</h3>
+                    <div class="badge-list">
+                        <div class="badge" id="badge-materi" title="Membaca semua materi">📚</div>
+                        <div class="badge" id="badge-latihan" title="Menyelesaikan semua latihan">🏆</div>
+                        <div class="badge" id="badge-sempurna" title="Nilai 100 di latihan">⭐</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px; text-align: center;">Materi Cepat</h3>
+            <div class="thumbnail-grid">
+                <!-- Dibuat via JS -->
+            </div>
+        </section>
+
+        <!-- SECTION: MATERI -->
+        <section id="materi" class="page-section">
+            <h2 class="text-center" style="margin-bottom: 30px;">Eksplorasi Simbol</h2>
+            
+            <div class="materi-layout">
+                <!-- Kiri: Garuda Explorer -->
+                <div class="garuda-explorer card">
+                    <h3>Perisai Garuda</h3>
+                    <div class="shield-container">
+                    </div>
+                </div>
+
+                <!-- Kanan: Flashcard Detail -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="materi-card">
+                        <div class="simbol-img" id="materi-img">
+                            <!-- SVG disisipkan via JS -->
+                        </div>
+                        <h3 class="simbol-title" id="materi-title">Pilih Simbol</h3>
+                        <p class="simbol-sila" id="materi-sila">Sila ke-...</p>
+                        <p class="simbol-desc" id="materi-desc">Gunakan tombol di bawah untuk melihat penjelasan simbol.</p>
+                        
+                        <button class="btn btn-secondary btn-icon hidden" id="btn-suara" style="position: absolute; top: 20px; right: 20px; width: 60px; height: 60px;" aria-label="Dengarkan Penjelasan">
+                            <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                        </button>
+                    </div>
+                    <div class="materi-controls">
+                        <button class="btn btn-outline" id="btn-prev" onclick="app.materi.prev()" disabled>⬅️ Sebelumnya</button>
+                        <span id="materi-counter">0/5</span>
+                        <button class="btn btn-primary" id="btn-next" onclick="app.materi.next()" disabled>Selanjutnya ➡️</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: LATIHAN -->
+        <section id="latihan" class="page-section">
+            <h2 class="text-center" style="margin-bottom: 20px;">Ayo Berlatih!</h2>
+            
+            <div class="latihan-menu">
+                <button class="btn btn-outline latihan-btn active" onclick="app.latihan.switchType('tf')" id="tab-tf">Benar/Salah</button>
+                <button class="btn btn-outline latihan-btn" onclick="app.latihan.switchType('match')" id="tab-match">Mencocokkan</button>
+                <button class="btn btn-outline latihan-btn" onclick="app.latihan.switchType('dnd')" id="tab-dnd">Tarik & Letakkan</button>
+            </div>
+
+            <div class="latihan-area card">
+                
+                <!-- Area Tipe 1: Benar/Salah -->
+                <div id="lat-tf" class="lat-container w-100" style="width: 100%;">
+                    <div class="progress-container"><div class="progress-bar" id="tf-progress" style="width: 0%;"></div></div>
+                    <p id="tf-counter" style="color: var(--text-light); margin-bottom: 10px;">Soal 1 dari 5</p>
+                    <div class="tf-question" id="tf-question-text">Memuat pertanyaan...</div>
+                    <div class="tf-buttons">
+                        <button class="btn btn-true" onclick="app.latihan.answerTF(true)">Benar ✅</button>
+                        <button class="btn btn-false" onclick="app.latihan.answerTF(false)">Salah ❌</button>
+                    </div>
+                </div>
+
+                <!-- Area Tipe 2: Mencocokkan -->
+                <div id="lat-match" class="lat-container hidden" style="width: 100%;">
+                    <p style="margin-bottom: 20px; font-size: 20px;">Klik simbol di sebelah kiri, lalu klik sila yang tepat di sebelah kanan.</p>
+                    <div class="match-grid">
+                        <div class="match-col" id="match-left">
+                            <!-- Diisi via JS -->
+                        </div>
+                        <div class="match-col" id="match-right">
+                             <!-- Diisi via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Area Tipe 3: Drag & Drop (Tap to Place untuk Mobile) -->
+                <div id="lat-dnd" class="lat-container hidden" style="width: 100%;">
+                    <p style="margin-bottom: 20px; font-size: 20px;">Klik simbol di atas, lalu klik kotak yang kosong di bawah.</p>
+                    <div class="dnd-container">
+                        <div class="dnd-sources" id="dnd-sources">
+                            <!-- Item Draggable -->
+                        </div>
+                        <div class="dnd-targets" id="dnd-targets">
+                            <!-- Target Drop -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Area Hasil -->
+                <div id="lat-result" class="lat-container hidden w-100" style="width: 100%;">
+                    <div class="result-box">
+                        <h3 id="result-title" style="font-size: 32px; margin-bottom: 20px;">Luar Biasa!</h3>
+                        <div class="score-circle" id="result-score">100</div>
+                        <p id="result-msg" style="font-size: 20px; margin-bottom: 30px;">Kamu menjawab semua dengan benar.</p>
+                        <button class="btn btn-primary" onclick="app.latihan.resetCurrent()">Ulangi Latihan 🔄</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION: REFLEKSI -->
+        <section id="refleksi" class="page-section">
+            <div class="card" style="max-width: 800px; margin: 0 auto;">
+                <h2 class="text-center" style="margin-bottom: 10px;">Bagaimana Perasaanmu?</h2>
+                <p class="text-center text-light" style="margin-bottom: 30px;">Ceritakan pengalaman belajarmu hari ini.</p>
+
+                <div class="emoji-group" id="emoji-group">
+                    <button class="emoji-btn" data-val="sedih" aria-label="Masih bingung">😕</button>
+                    <button class="emoji-btn" data-val="biasa" aria-label="Cukup paham">🙂</button>
+                    <button class="emoji-btn" data-val="senang" aria-label="Sangat senang">🤩</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="fav-symbol">Simbol mana yang paling kamu suka?</label>
+                    <select id="fav-symbol">
+                        <option value="">Pilih simbol favoritmu...</option>
+                        <option value="Bintang">Bintang Emas</option>
+                        <option value="Rantai">Rantai Emas</option>
+                        <option value="Pohon">Pohon Beringin</option>
+                        <option value="Banteng">Kepala Banteng</option>
+                        <option value="PadiKapas">Padi dan Kapas</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="refleksi-text">Apa yang kamu pelajari hari ini?</label>
+                    <textarea id="refleksi-text" rows="4" placeholder="Tuliskan di sini... (misal: Saya jadi tahu arti lambang bintang)"></textarea>
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-primary" style="font-size: 20px; padding: 15px 40px;" onclick="app.refleksi.save()">Simpan Refleksi 💾</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="custom-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="brand-logo">S</div>
+                <div>
+                    <p class="brand-title">Studiolpg</p>
+                    <p class="brand-copyright">&copy; 2026 Noviyalpg creative - Media Pembelajaran Interaktif</p>
+                </div>
+            </div>
+
+            <div class="footer-socials">
+                <a href="https://www.instagram.com/noviyalpg?igsh=MWRlMHBraTc0eGt1bg%3D%3D" class="social-icon instagram" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <a href="https://www.tiktok.com/@noviya.lpg?_t=ZS-8tafgg6Eeyl&_r=1" class="social-icon tiktok" aria-label="TikTok">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+                </a>
+                <a href="https://www.facebook.com/noviyalpg/" class="social-icon facebook" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                </a>
+                <a href="https://s.id/youtube-noviyalpg" class="social-icon youtube" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL FEEDBACK UTILITY -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <div class="modal-icon" id="modal-icon">⭐</div>
+            <h2 id="modal-title" style="margin-bottom: 10px;">Judul</h2>
+            <p id="modal-text" style="font-size: 20px; margin-bottom: 20px;">Pesan</p>
+            <button class="btn btn-primary" onclick="app.ui.closeModal()">Tutup</button>
+        </div>
+    </div>
+
+    <!-- AUDIO ENGINE & LOGIC (JAVASCRIPT) -->
+    <script>
+        /**
+         * KUMPULAN DATA APLIKASI
+         */
+        const DATA = {
+            materi: [
+                { id: 'sila1', nama: 'Bintang', sila: 'Sila ke-1: Ketuhanan Yang Maha Esa', deskripsi: 'Bintang berwarna emas dengan latar hitam. Bintang ini seperti cahaya dari Tuhan yang menerangi kita semua.', svg: '<img src="https://imgur.com/NO8kR58.png" alt="Bintang" style="width: 100%; height: 100%; object-fit: contain; pointer-events: none;">' },
+                { id: 'sila2', nama: 'Rantai', sila: 'Sila ke-2: Kemanusiaan yang Adil dan Beradab', deskripsi: 'Rantai emas dengan latar merah. Ada mata rantai kotak (laki-laki) dan bulat (perempuan) yang saling berkaitan. Artinya kita harus saling membantu.', svg: '<img src="https://imgur.com/RJkVgTO.png" alt="Rantai" style="width: 100%; height: 100%; object-fit: contain; pointer-events: none;">' },
+                { id: 'sila3', nama: 'Pohon Beringin', sila: 'Sila ke-3: Persatuan Indonesia', deskripsi: 'Pohon beringin yang besar dengan latar putih. Pohon ini tempat berteduh yang nyaman. Melambangkan negara kita tempat bernaung seluruh rakyat.', svg: '<img src="https://imgur.com/fW56FsL.png" alt="Pohon Beringin" style="width: 100%; height: 100%; object-fit: contain; pointer-events: none;">' },
+                { id: 'sila4', nama: 'Kepala Banteng', sila: 'Sila ke-4: Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan', deskripsi: 'Kepala banteng dengan latar merah. Banteng hewan yang suka berkumpul. Artinya orang Indonesia suka berkumpul dan bermusyawarah menyelesaikan masalah.', svg: '<img src="https://imgur.com/7fsfeyR.png" alt="Kepala Banteng" style="width: 100%; height: 100%; object-fit: contain; pointer-events: none;">' },
+                { id: 'sila5', nama: 'Padi dan Kapas', sila: 'Sila ke-5: Keadilan Sosial bagi Seluruh Rakyat Indonesia', deskripsi: 'Padi (kuning) melambangkan makanan. Kapas (hijau putih) melambangkan pakaian. Artinya tujuan negara kita adalah agar semua rakyat makmur.', svg: '<img src="https://imgur.com/XNyxwXN.png" alt="Padi dan Kapas" style="width: 100%; height: 100%; object-fit: contain; pointer-events: none;">' }
+            ],
+            latihan_tf: [
+                { q: "Bintang adalah lambang Sila Pertama.", a: true },
+                { q: "Pohon Beringin adalah lambang Sila Kelima.", a: false },
+                { q: "Warna latar lambang Rantai adalah merah.", a: true },
+                { q: "Banteng suka menyendiri, tidak suka berkumpul.", a: false },
+                { q: "Padi melambangkan kebutuhan makanan kita.", a: true }
+            ]
+        };
+
+        /**
+         * AUDIO ENGINE (Vanilla Web Audio API)
+         * Digunakan untuk generate sound effect tanpa file eksternal
+         */
+        const audioEngine = {
+            ctx: null,
+            bgmOscillators: [],
+            isPlayingBGM: false,
+            isMuted: false,
+
+            init() {
+                try {
+                    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContext();
+                } catch(e) { console.log('Audio API not supported'); }
+            },
+            
+            // SFX Generator
+            playTone(freq, type, duration, vol) {
+                if(!this.ctx || this.isMuted) return;
+                if(this.ctx.state === 'suspended') this.ctx.resume();
+                
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                
+                gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + duration);
+                
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + duration);
+            },
+
+            sfxClick() { this.playTone(600, 'sine', 0.1, 0.1); },
+            sfxCorrect() { 
+                this.playTone(800, 'sine', 0.1, 0.1); 
+                setTimeout(() => this.playTone(1200, 'sine', 0.2, 0.15), 100);
+            },
+            sfxWrong() { 
+                this.playTone(300, 'sawtooth', 0.2, 0.1); 
+                setTimeout(() => this.playTone(200, 'sawtooth', 0.3, 0.1), 150);
+            },
+            sfxWin() {
+                const notes = [523.25, 659.25, 783.99, 1046.50]; // C E G C
+                notes.forEach((freq, i) => {
+                    setTimeout(() => this.playTone(freq, 'sine', 0.3, 0.1), i * 150);
+                });
+            },
+
+            // TTS untuk materi
+            speak(text) {
+                if(!window.speechSynthesis || this.isMuted) return;
+                window.speechSynthesis.cancel(); // stop current
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'id-ID';
+                utterance.rate = 0.9; // Agak lambat untuk anak SD
+                utterance.pitch = 1.1;
+                window.speechSynthesis.speak(utterance);
+            },
+
+            stopSpeak() {
+                if(window.speechSynthesis) window.speechSynthesis.cancel();
+            },
+
+            toggleMute() {
+                this.isMuted = !this.isMuted;
+                this.stopSpeak();
+                document.getElementById('icon-vol-on').classList.toggle('hidden', this.isMuted);
+                document.getElementById('icon-vol-off').classList.toggle('hidden', !this.isMuted);
+            }
+        };
+
+        /**
+         * STATE MANAGEMENT (Local Storage)
+         */
+        const stateManager = {
+            state: {
+                materiRead: [], // array of indexes
+                latihanScores: { tf: 0, match: 0, dnd: 0 },
+                refleksi: null
+            },
+            load() {
+                const saved = localStorage.getItem('pancasila_app_state');
+                if(saved) {
+                    try { this.state = {...this.state, ...JSON.parse(saved)}; } catch(e){}
+                }
+                this.updateUI();
+            },
+            save() {
+                localStorage.setItem('pancasila_app_state', JSON.stringify(this.state));
+                this.updateUI();
+            },
+            markRead(index) {
+                if(!this.state.materiRead.includes(index)) {
+                    this.state.materiRead.push(index);
+                    this.save();
+                }
+            },
+            saveScore(type, score) {
+                this.state.latihanScores[type] = Math.max(this.state.latihanScores[type], score);
+                this.save();
+            },
+            updateUI() {
+                // Kalkulasi progress
+                const matTotal = DATA.materi.length;
+                const matRead = this.state.materiRead.length;
+                
+                let latSelesai = 0;
+                if(this.state.latihanScores.tf > 0) latSelesai++;
+                if(this.state.latihanScores.match > 0) latSelesai++;
+                if(this.state.latihanScores.dnd > 0) latSelesai++;
+                
+                const totalItems = matTotal + 3; // 5 materi + 3 latihan
+                const completedItems = matRead + latSelesai;
+                const percent = Math.round((completedItems / totalItems) * 100);
+
+                // Update Progress bar
+                const pBar = document.getElementById('main-progress');
+                const pText = document.getElementById('progress-text');
+                if(pBar) pBar.style.width = percent + '%';
+                if(pText) pText.innerText = percent;
+
+                // Update Badges
+                document.getElementById('badge-materi')?.classList.toggle('earned', matRead === matTotal);
+                document.getElementById('badge-latihan')?.classList.toggle('earned', latSelesai === 3);
+                
+                const isPerfect = (this.state.latihanScores.tf === 100 && this.state.latihanScores.match === 100 && this.state.latihanScores.dnd === 100);
+                document.getElementById('badge-sempurna')?.classList.toggle('earned', isPerfect);
+            }
+        };
+
+        /**
+         * APLIKASI KONTROL UTAMA
+         */
+        const app = {
+            ui: {
+                init() {
+                    // Navigasi
+                    document.querySelectorAll('.nav-link, .btn-nav-jump').forEach(link => {
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const targetId = e.currentTarget.getAttribute('data-target');
+                            
+                            // Logika khusus untuk menu pengembang (Redirect URL)
+                            if (targetId === 'pengembang') {
+                                window.location.href = "https://s.id/noviyalpg";
+                                return;
+                            }
+                            
+                            this.navigate(targetId);
+                            // Close mobile menu if open
+                            document.getElementById('main-nav').classList.remove('open');
+                        });
+                    });
+
+                    // Mobile Menu Toggle
+                    document.getElementById('btn-menu').addEventListener('click', () => {
+                        document.getElementById('main-nav').classList.toggle('open');
+                        audioEngine.sfxClick();
+                    });
+
+                    // Audio Toggle
+                    document.getElementById('btn-audio').addEventListener('click', () => {
+                        if(!audioEngine.ctx) audioEngine.init();
+                        audioEngine.toggleMute();
+                        audioEngine.sfxClick();
+                    });
+
+                    // Fullscreen
+                    document.getElementById('btn-fullscreen').addEventListener('click', () => {
+                        if (!document.fullscreenElement) {
+                            document.documentElement.requestFullscreen().catch(err => console.log(err));
+                        } else {
+                            if (document.exitFullscreen) document.exitFullscreen();
+                        }
+                        audioEngine.sfxClick();
+                    });
+
+                    // Generate Thumbnails Beranda
+                    const grid = document.querySelector('.thumbnail-grid');
+                    DATA.materi.forEach((item, index) => {
+                        const div = document.createElement('div');
+                        div.className = 'card thumb-card';
+                        div.innerHTML = `<div class="thumb-icon">${item.svg}</div><h4>${item.nama}</h4>`;
+                        div.onclick = () => {
+                            this.navigate('materi');
+                            app.materi.showDetail(index);
+                        };
+                        grid.appendChild(div);
+                    });
+                },
+
+                navigate(targetId) {
+                    audioEngine.sfxClick();
+                    audioEngine.stopSpeak();
+                    
+                    document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+                    document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+                    
+                    const targetSec = document.getElementById(targetId);
+                    if(targetSec) targetSec.classList.add('active');
+                    
+                    const targetNav = document.querySelector(`.nav-link[data-target="${targetId}"]`);
+                    if(targetNav) targetNav.classList.add('active');
+                    
+                    window.scrollTo(0,0);
+
+                    // Re-init specific section logics
+                    if(targetId === 'materi' && app.materi.currentIndex === -1) app.materi.showDetail(0);
+                    if(targetId === 'latihan') app.latihan.switchType(app.latihan.currentType || 'tf');
+                },
+
+                showModal(title, text, icon, isWin = false) {
+                    document.getElementById('modal-title').innerText = title;
+                    document.getElementById('modal-text').innerText = text;
+                    document.getElementById('modal-icon').innerText = icon;
+                    document.getElementById('modal').classList.add('show');
+                    if(isWin) audioEngine.sfxWin();
+                },
+                closeModal() {
+                    document.getElementById('modal').classList.remove('show');
+                    audioEngine.sfxClick();
+                }
+            },
+
+            materi: {
+                currentIndex: -1,
+                init() {
+                    document.getElementById('btn-suara').addEventListener('click', () => {
+                        const item = DATA.materi[this.currentIndex];
+                        audioEngine.speak(item.sila + ". " + item.deskripsi);
+                    });
+                },
+                showDetail(index) {
+                    if(!audioEngine.ctx) audioEngine.init();
+                    audioEngine.sfxClick();
+                    audioEngine.stopSpeak();
+
+                    if(index < 0 || index >= DATA.materi.length) return;
+                    this.currentIndex = index;
+                    const item = DATA.materi[index];
+
+                    // Update UI
+                    document.getElementById('materi-img').innerHTML = item.svg;
+                    document.getElementById('materi-title').innerText = item.nama;
+                    document.getElementById('materi-sila').innerText = item.sila;
+                    document.getElementById('materi-desc').innerText = item.deskripsi;
+                    document.getElementById('btn-suara').classList.remove('hidden');
+                    document.getElementById('materi-counter').innerText = `${index + 1} / ${DATA.materi.length}`;
+
+                    // Buttons state
+                    document.getElementById('btn-prev').disabled = index === 0;
+                    document.getElementById('btn-next').disabled = index === DATA.materi.length - 1;
+
+                    // Garuda Shield Active State
+                    document.querySelectorAll('.click-area').forEach(el => el.classList.remove('active'));
+                    const activeArea = document.getElementById(`area-${index+1}`);
+                    if (activeArea) activeArea.classList.add('active');
+
+                    // Visual Feedback Card Animation
+                    const card = document.getElementById('materi-card');
+                    card.style.transform = 'scale(0.98)';
+                    setTimeout(() => card.style.transform = 'scale(1)', 150);
+
+                    // Mark read
+                    stateManager.markRead(index);
+                },
+                next() { this.showDetail(this.currentIndex + 1); },
+                prev() { this.showDetail(this.currentIndex - 1); }
+            },
+
+            latihan: {
+                currentType: 'tf', // tf, match, dnd
+                tfState: { idx: 0, score: 0 },
+                matchState: { selectedLeft: null, pairs: [], matched: 0 },
+                dndState: { selectedSource: null, matched: 0 },
+
+                init() {
+                    this.generateMatch();
+                    this.generateDnd();
+                },
+
+                switchType(type) {
+                    audioEngine.sfxClick();
+                    this.currentType = type;
+                    
+                    // Reset UI Tabs
+                    document.querySelectorAll('.latihan-btn').forEach(btn => btn.classList.remove('active'));
+                    document.getElementById(`tab-${type}`).classList.add('active');
+                    
+                    // Hide all areas
+                    document.querySelectorAll('.lat-container').forEach(c => c.classList.add('hidden'));
+                    
+                    // Show target
+                    document.getElementById(`lat-${type}`).classList.remove('hidden');
+                    
+                    // Init logic
+                    if(type === 'tf') this.renderTF();
+                },
+
+                showResult(score) {
+                    document.querySelectorAll('.lat-container').forEach(c => c.classList.add('hidden'));
+                    const resDiv = document.getElementById('lat-result');
+                    resDiv.classList.remove('hidden');
+                    
+                    document.getElementById('result-score').innerText = score;
+                    
+                    let msg = "";
+                    if(score === 100) msg = "Sempurna! Kamu sangat hebat.";
+                    else if(score >= 60) msg = "Bagus! Terus berlatih ya.";
+                    else msg = "Jangan menyerah, ayo coba lagi!";
+                    
+                    document.getElementById('result-msg').innerText = msg;
+                    
+                    stateManager.saveScore(this.currentType, score);
+                    
+                    if(score === 100) audioEngine.sfxWin();
+                },
+
+                resetCurrent() {
+                    audioEngine.sfxClick();
+                    if(this.currentType === 'tf') {
+                        this.tfState = { idx: 0, score: 0 };
+                        this.renderTF();
+                        document.getElementById('lat-result').classList.add('hidden');
+                        document.getElementById('lat-tf').classList.remove('hidden');
+                    } else if(this.currentType === 'match') {
+                        this.generateMatch();
+                        document.getElementById('lat-result').classList.add('hidden');
+                        document.getElementById('lat-match').classList.remove('hidden');
+                    } else if(this.currentType === 'dnd') {
+                        this.generateDnd();
+                        document.getElementById('lat-result').classList.add('hidden');
+                        document.getElementById('lat-dnd').classList.remove('hidden');
+                    }
+                },
+
+                // --- LOGIKA BENAR/SALAH ---
+                renderTF() {
+                    const state = this.tfState;
+                    if(state.idx >= DATA.latihan_tf.length) {
+                        const finalScore = Math.round((state.score / DATA.latihan_tf.length) * 100);
+                        this.showResult(finalScore);
+                        return;
+                    }
+                    
+                    const q = DATA.latihan_tf[state.idx];
+                    document.getElementById('tf-question-text').innerText = q.q;
+                    document.getElementById('tf-counter').innerText = `Soal ${state.idx + 1} dari ${DATA.latihan_tf.length}`;
+                    
+                    const pct = (state.idx / DATA.latihan_tf.length) * 100;
+                    document.getElementById('tf-progress').style.width = `${pct}%`;
+                },
+                answerTF(answer) {
+                    const q = DATA.latihan_tf[this.tfState.idx];
+                    if(answer === q.a) {
+                        audioEngine.sfxCorrect();
+                        this.tfState.score++;
+                    } else {
+                        audioEngine.sfxWrong();
+                    }
+                    this.tfState.idx++;
+                    this.renderTF();
+                },
+
+                // --- LOGIKA MENCOCOKKAN ---
+                generateMatch() {
+                    const leftCol = document.getElementById('match-left');
+                    const rightCol = document.getElementById('match-right');
+                    leftCol.innerHTML = ''; rightCol.innerHTML = '';
+                    this.matchState = { selectedLeft: null, matched: 0 };
+                    
+                    // Shuffle logic
+                    let leftItems = DATA.materi.map((m, i) => ({id: i, html: `<div style="width:40px;height:40px;display:inline-block;vertical-align:middle;margin-right:10px;">${m.svg}</div> ${m.nama}`}));
+                    let rightItems = DATA.materi.map((m, i) => ({id: i, html: m.sila.split(':')[0]})); // Ambil "Sila ke-X"
+                    
+                    leftItems.sort(() => Math.random() - 0.5);
+                    rightItems.sort(() => Math.random() - 0.5);
+
+                    leftItems.forEach(item => {
+                        const el = document.createElement('div');
+                        el.className = 'match-item left-item';
+                        el.innerHTML = item.html;
+                        el.onclick = () => this.selectMatchLeft(el, item.id);
+                        leftCol.appendChild(el);
+                    });
+
+                    rightItems.forEach(item => {
+                        const el = document.createElement('div');
+                        el.className = 'match-item right-item';
+                        el.innerHTML = item.html;
+                        el.onclick = () => this.selectMatchRight(el, item.id);
+                        rightCol.appendChild(el);
+                    });
+                },
+                selectMatchLeft(el, id) {
+                    if(el.classList.contains('matched')) return;
+                    audioEngine.sfxClick();
+                    document.querySelectorAll('.left-item').forEach(e => e.classList.remove('selected'));
+                    el.classList.add('selected');
+                    this.matchState.selectedLeft = { el, id };
+                },
+                selectMatchRight(el, id) {
+                    if(el.classList.contains('matched')) return;
+                    if(!this.matchState.selectedLeft) {
+                        // Animasi goyang jika klik kanan dulu
+                        el.classList.add('error');
+                        setTimeout(() => el.classList.remove('error'), 500);
+                        audioEngine.sfxWrong();
+                        return;
+                    }
+                    
+                    if(this.matchState.selectedLeft.id === id) {
+                        // Benar
+                        audioEngine.sfxCorrect();
+                        el.classList.add('matched');
+                        this.matchState.selectedLeft.el.classList.remove('selected');
+                        this.matchState.selectedLeft.el.classList.add('matched');
+                        this.matchState.selectedLeft = null;
+                        this.matchState.matched++;
+                        
+                        if(this.matchState.matched === DATA.materi.length) {
+                            setTimeout(() => this.showResult(100), 500);
+                        }
+                    } else {
+                        // Salah
+                        audioEngine.sfxWrong();
+                        el.classList.add('error');
+                        this.matchState.selectedLeft.el.classList.add('error');
+                        setTimeout(() => {
+                            el.classList.remove('error');
+                            if(this.matchState.selectedLeft) this.matchState.selectedLeft.el.classList.remove('error');
+                        }, 500);
+                    }
+                },
+
+                // --- LOGIKA DRAG AND DROP (Tap-to-Place) ---
+                generateDnd() {
+                    const sources = document.getElementById('dnd-sources');
+                    const targets = document.getElementById('dnd-targets');
+                    sources.innerHTML = ''; targets.innerHTML = '';
+                    this.dndState = { selectedSource: null, matched: 0 };
+
+                    let items = [...DATA.materi].sort(() => Math.random() - 0.5);
+                    
+                    items.forEach((item) => {
+                        // Buat Source (Bisa di tap)
+                        const src = document.createElement('div');
+                        src.className = 'dnd-item';
+                        src.innerHTML = item.svg;
+                        src.id = `dnd-src-${item.id}`;
+                        src.onclick = () => this.selectDndSource(src, item.id);
+                        sources.appendChild(src);
+                    });
+
+                    // Buat Targets statis urut 1-5
+                    DATA.materi.forEach(item => {
+                        const tgt = document.createElement('div');
+                        tgt.className = 'dnd-target';
+                        tgt.innerHTML = `
+                            <div class="target-label">${item.sila.split(':')[0]}</div>
+                            <div class="target-drop-area" id="dnd-tgt-${item.id}"></div>
+                        `;
+                        tgt.onclick = () => this.selectDndTarget(tgt, item.id);
+                        targets.appendChild(tgt);
+                    });
+                },
+                selectDndSource(el, id) {
+                    if(el.style.visibility === 'hidden') return;
+                    audioEngine.sfxClick();
+                    document.querySelectorAll('.dnd-item').forEach(e => e.classList.remove('selected-dnd'));
+                    el.classList.add('selected-dnd');
+                    this.dndState.selectedSource = { el, id };
+                    
+                    // Highlight targets
+                    document.querySelectorAll('.dnd-target:not(.filled)').forEach(t => t.classList.add('drag-over'));
+                },
+                selectDndTarget(tgt, targetId) {
+                    document.querySelectorAll('.dnd-target').forEach(t => t.classList.remove('drag-over'));
+                    
+                    if(tgt.classList.contains('filled') || !this.dndState.selectedSource) return;
+
+                    if(this.dndState.selectedSource.id === targetId) {
+                        // Benar
+                        audioEngine.sfxCorrect();
+                        const dropArea = tgt.querySelector('.target-drop-area');
+                        dropArea.innerHTML = this.dndState.selectedSource.el.innerHTML; // Copy SVG
+                        
+                        tgt.classList.add('filled');
+                        this.dndState.selectedSource.el.style.visibility = 'hidden'; // Hide original
+                        this.dndState.selectedSource.el.classList.remove('selected-dnd');
+                        this.dndState.selectedSource = null;
+                        this.dndState.matched++;
+                        
+                        if(this.dndState.matched === DATA.materi.length) {
+                            setTimeout(() => this.showResult(100), 500);
+                        }
+                    } else {
+                        // Salah
+                        audioEngine.sfxWrong();
+                        tgt.style.borderColor = 'var(--error)';
+                        tgt.style.animation = 'shake 0.5s';
+                        setTimeout(() => {
+                            tgt.style.borderColor = '';
+                            tgt.style.animation = '';
+                        }, 500);
+                    }
+                }
+            },
+
+            refleksi: {
+                init() {
+                    const emojis = document.querySelectorAll('.emoji-btn');
+                    emojis.forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            audioEngine.sfxClick();
+                            emojis.forEach(b => b.classList.remove('selected'));
+                            e.currentTarget.classList.add('selected');
+                        });
+                    });
+
+                    // Load saved reflection if any
+                    if(stateManager.state.refleksi) {
+                        const r = stateManager.state.refleksi;
+                        if(r.emoji) document.querySelector(`.emoji-btn[data-val="${r.emoji}"]`)?.classList.add('selected');
+                        if(r.symbol) document.getElementById('fav-symbol').value = r.symbol;
+                        if(r.text) document.getElementById('refleksi-text').value = r.text;
+                    }
+                },
+                save() {
+                    const selEmoji = document.querySelector('.emoji-btn.selected');
+                    const emojiVal = selEmoji ? selEmoji.getAttribute('data-val') : null;
+                    const symbolVal = document.getElementById('fav-symbol').value;
+                    const textVal = document.getElementById('refleksi-text').value;
+
+                    if(!emojiVal) {
+                        app.ui.showModal("Ups!", "Pilih emoji perasaanmu dulu ya.", "🙂");
+                        return;
+                    }
+
+                    stateManager.state.refleksi = {
+                        emoji: emojiVal,
+                        symbol: symbolVal,
+                        text: textVal,
+                        date: new Date().toISOString()
+                    };
+                    stateManager.save();
+                    
+                    app.ui.showModal("Berhasil!", "Terima kasih sudah belajar hari ini. Refleksimu sudah disimpan.", "🌟", true);
+                    document.getElementById('refleksi-text').value = '';
+                    document.getElementById('fav-symbol').value = '';
+                    document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
+                }
+            }
+        };
+
+        // --- INIT APLIKASI KETIKA DOM READY ---
+        document.addEventListener('DOMContentLoaded', () => {
+            stateManager.load();
+            app.ui.init();
+            app.materi.init();
+            app.latihan.init();
+            app.refleksi.init();
+        });
+
+    </script>
+</body>
+</html>
